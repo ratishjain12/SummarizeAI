@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { registerUserActions } from "@/data/actions/auth-auctions";
 import { useFormState } from "react-dom";
+import { ZodError } from "zod";
+import ZodErrors from "../ZodErrors";
 
 const INITIAL_STATE = {
   data: null,
@@ -24,6 +26,7 @@ export default function SignupForm() {
     registerUserActions,
     INITIAL_STATE
   );
+  console.log(formState?.zodErrors);
   return (
     <div className="w-full max-w-md">
       <form action={formAction}>
@@ -43,6 +46,7 @@ export default function SignupForm() {
                 type="text"
                 placeholder="username"
               />
+              <ZodErrors error={formState?.zodErrors?.username} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -52,6 +56,7 @@ export default function SignupForm() {
                 type="email"
                 placeholder="name@example.com"
               />
+              <ZodErrors error={formState?.zodErrors?.email} />
             </div>
 
             <div className="space-y-2">
@@ -62,6 +67,7 @@ export default function SignupForm() {
                 type="password"
                 placeholder="password"
               />
+              <ZodErrors error={formState?.zodErrors?.password} />
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">

@@ -13,17 +13,18 @@ import {
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { registerUserActions } from "@/data/actions/auth-auctions";
+import { registerUserAction } from "@/data/actions/auth-actions";
 import { useFormState } from "react-dom";
-import { ZodError } from "zod";
 import ZodErrors from "../ZodErrors";
+import StrapiErrors from "../StrapiErrors";
+import SubmitButton from "../SubmitButton";
 
 const INITIAL_STATE = {
   data: null,
 };
 export default function SignupForm() {
   const [formState, formAction] = useFormState(
-    registerUserActions,
+    registerUserAction,
     INITIAL_STATE
   );
   console.log(formState?.zodErrors);
@@ -70,10 +71,13 @@ export default function SignupForm() {
               <ZodErrors error={formState?.zodErrors?.password} />
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col">
-            <button className="w-full" type="submit">
-              Sign Up
-            </button>
+          <CardFooter className="flex flex-col w-full">
+            <SubmitButton
+              className="w-full"
+              text="Sign Up"
+              loadingText="Loading"
+            />
+            <StrapiErrors error={formState?.strapiErrors} />
           </CardFooter>
         </Card>
         <div className="mt-4 text-center text-sm">
